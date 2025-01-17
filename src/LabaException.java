@@ -1,3 +1,4 @@
+
 abstract class LabaException extends Exception {
     public LabaException(String msg) {
         super("Ошибка: " + msg);
@@ -17,6 +18,7 @@ class TooManyElementsException extends LabaException {
 }
 
 class LessThanAllowedException extends LabaException {
-    public LessThanAllowedException(int minValue) { super("Элемент меньше, чем разрешённое число " + minValue);
+    public LessThanAllowedException(int minValue) {
+        super("Элемент меньше, чем разрешённое число " + minValue);
     }
 }

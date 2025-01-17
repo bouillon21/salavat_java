@@ -1,9 +1,21 @@
+
 import java.util.List;
+import java.util.Objects;
 
 class Var10Impl implements Var10 {
+    private final EventLogger logger;
+
+    public Var10Impl(EventLogger logger) {
+        this.logger = logger;
+    }
 
     @Override
     public void runTask(List<Integer> numbers) throws LabaException {
+        logger.logEvent("Начало обработки задачи");
+        if (Objects.equals(numbers, List.of(1, 1, 1, 1, 1))) {
+            logger.logEvent("Лист входных данных совпадает с 1, 1, 1, 1, 1");
+        }
+
         if (numbers.size() > maxElements) {
             throw new TooManyElementsException(maxElements);
         }
@@ -17,7 +29,6 @@ class Var10Impl implements Var10 {
         int evenPositiveCount = 0;
         int oddPositiveCount = 0;
 
-        // Подсчёт положительных чётных и нечётных чисел
         for (int number : numbers) {
             if (number <= 0) {
                 continue;
@@ -26,16 +37,16 @@ class Var10Impl implements Var10 {
                 evenPositiveCount++;
             } else {
                 oddPositiveCount++;
+                logger.logEvent("Переменная oddPositiveCount изменила свое значение!");
             }
         }
 
-        // Вывод результатов
         if (evenPositiveCount > oddPositiveCount) {
-            System.out.println("Больше чётных и положительных чисел.");
+            logger.logEvent("Больше чётных и положительных чисел.");
         } else if (oddPositiveCount > evenPositiveCount) {
-            System.out.println("Больше нечётных и положительных чисел.");
+            logger.logEvent("Больше нечётных и положительных чисел.");
         } else {
-            System.out.println("Чётных и нечётных положительных чисел поровну.");
+            logger.logEvent("Чётных и нечётных положительных чисел поровну.");
         }
     }
 }
