@@ -14,17 +14,21 @@ public class Main {
 
         List<String> lines = Files.readAllLines(Paths.get(dataFilePath));
 
-        EventLogger logger = new EventLogger(lines.getFirst());
+        TaskListener listener = new CompositeListener(
+                new FileLogger(lines.getFirst()),
+                new ConsoleLogger()
+        );
+
         List<Integer> numbers = Arrays.stream(lines.get(1)
                         .split(","))
                         .map(String::trim)
                         .map(Integer::parseInt).toList();
 
         try {
-            Var10Impl task = new Var10Impl(logger);
+            Var10Impl task = new Var10Impl(listener);
             task.runTask(numbers);
         } catch (LabaException e) {
-            logger.logEvent(e.getMessage());
+            listener.onError(e.getMessage());
             e.printStackTrace();
         }
     }
